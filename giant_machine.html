@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attack on Titan World Map</title>
+  <style>
+    /* 폰트 추가 */
+    @font-face {
+    font-family: 'TTHakgyoansimMulgyeolB';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_keris@1.0/TTHakgyoansimMulgyeolB.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    }
+
+    @font-face {
+    font-family: 'MYArirang-Medium';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/MYArirang-Medium.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    }
+
+    /* 페이지 타이틀 스타일 */
+    .page-title {
+      font-size: 120px;
+      color: rgb(210, 45, 45);
+      text-align: center;
+      margin-top: 50px;
+      margin-bottom: 20px;
+      font-family: 'MYArirang-Medium', 'Arial', sans-serif;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    /* 전체 배경 */
+    body {
+      background: url('https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.namu.wiki%2Fi%2Fvdcxq_OpSVBE7Uu7fEyq60p6nforjBIef7wDgxgrsW6C9LNNSyZkBy1J9UU-31XtUR5gCGSzYLd5thb_zXJzug.webp&type=sc960_832');
+      background-color: #d9c8a6;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      font-family: 'TTHakgyoansimMulgyeolB', 'Arial', sans-serif;
+    }
+
+    /* 전체 컨테이너 */
+    .giant-world-map {
+      position: relative;
+      width: 80%;
+      max-width: 900px;
+      height: 80%;
+      max-height: 600px;
+      background: rgba(0, 0, 0, 0.6);
+      border: 10px solid #3c2f2f;
+      border-bottom: 20px solid #3c2f2f;
+      border-top: 20px solid #3c2f2f;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.3);
+      animation: zoomIn 1.5s ease-in-out;
+    }
+
+    /* 테두리 위쪽 턱 */
+    .giant-world-map::before {
+      content: '';
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      height: 20px;
+      background: #3c2f2f;
+      border-radius: 10px 10px 0 0;
+      box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    /* 테두리 아래쪽 받침대 */
+    .giant-world-map::after {
+      content: '';
+      position: absolute;
+      bottom: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      height: 20px;
+      background: #3c2f2f;
+      border-radius: 0 0 10px 10px;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    /* 마레국 */
+    .marley {
+      width: 420px;
+      height: 500px;
+      background: #5c4033;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 60px;
+      left: 80px;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    /* 파라디섬 */
+    .paradis {
+      width: 180px;
+      height: 190px;
+      background: #7a5c4a;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 100px;
+      right: 80px;
+      transition: transform 0.3s ease;
+    }
+
+    /* 설명 박스 */
+    .click_box {
+      width: 280px;
+      height: 100px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 520px;
+      right: 5px;
+      transition: transform 0.3s ease;
+    }
+
+    /* 마우스 올렸을 때 효과 */
+    .marley:hover, .paradis:hover {
+      transform: scale(1.03);
+    }
+
+    /* 마레국 제목 스타일 */
+    .marley-title {
+      color: #e0e0e0;
+      font-size: 36px;
+      font-weight: bold;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    }
+    .marley:hover {
+      transform: scale(1.1);
+      background: rgba(20, 10, 0, 0.7);
+    }
+
+    /* 벽들 스타일 */
+    .wall {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .wall:hover {
+      transform: scale(1.1);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* 벽별 스타일 */
+    .maria {
+      width: 140px;
+      height: 140px;
+      top: 20px;
+      left: 20px;
+    }
+
+    .rose {
+      width: 90px;
+      height: 90px;
+      top: 45px;
+      left: 45px;
+    }
+
+    .sina {
+      width: 40px;
+      height: 40px;
+      top: 70px;
+      left: 70px;
+    }
+
+    /* 벽 이름 스타일 */
+    .wall span {
+      position: absolute;
+      font-size: 12px;
+      color: #e0e0e0;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .maria span {
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .rose span {
+      top: 50%;
+      right: -35px;
+      transform: translateY(-50%);
+    }
+
+    .sina span {
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* 클릭 박스 텍스트 */
+    .click_box h3 {
+      font-size: 18px;
+      color: #ffffff;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+    }
+
+    /* 클릭 박스에 마우스 올렸을 때 */
+    .click_box h3:hover {
+      color: #ffcc00;
+    }
+
+    /* 줌 인 애니메이션 */
+    @keyframes zoomIn {
+      from {
+        transform: scale(0.9);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <h1 class="page-title">Attack on Titan World Map</h1>
+
+  <div class="giant-world-map">
+    <div class="marley">
+      <div class="marley-title">Marley</div>
+    </div>
+    <div class="paradis">
+      <div class="wall maria"><span>Wall Maria</span></div>
+      <div class="wall rose"><span>Wall Rose</span></div>
+      <div class="wall sina"><span>Wall Sina</span></div>
+    </div>
+    <div class="click_box">
+      <div class="설명"></div>
+      <h3>글씨에 마우스를 올려보세요.</h3>
+    </div>
+  </div>
+</body>
+</html>
